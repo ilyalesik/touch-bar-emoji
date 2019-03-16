@@ -1,15 +1,8 @@
 const { app, BrowserWindow, TouchBar } = require('electron')
 
-const { TouchBarLabel, TouchBarButton, TouchBarSpacer } = TouchBar
+const { TouchBarLabel, TouchBarButton, TouchBarSpacer, TouchBarScrubber } = TouchBar;
 
-// Spin button
-const spin = new TouchBarButton({
-    label: '🎰 ',
-    backgroundColor: "#000000",
-    click: () => {
-
-    }
-});
+const {emoji} = require("./emoji");
 
 const esc = new TouchBarButton({
     label: "esc",
@@ -18,11 +11,17 @@ const esc = new TouchBarButton({
     }
 });
 
+const scrubber = new TouchBarScrubber({
+    items: emoji.map((emojiItem) => ({
+        label: emojiItem
+    })),
+    highlight: (selectedIndex) => {
+        console.log(emoji[selectedIndex]);
+    }
+});
 
 const touchBar = new TouchBar({
-    items: [
-        spin
-    ],
+    items: [scrubber],
     escapeItem: esc
 });
 
